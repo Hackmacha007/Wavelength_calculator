@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frequency to Wavelength Converter</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+  }
+  #calculator {
+    background-color: #444;
+    border-radius: 10px;
+    padding: 20px;
+    display: inline-block;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  input[type="number"] {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    width: 150px;
+    background-color: #333;
+    color: #fff;
+    font-size: 18px;
+    text-align: right;
+  }
+  input[type="submit"] {
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff9500;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  input[type="submit"]:hover {
+    background-color: #ffad33;
+  }
+  select {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 18px;
+  }
+  #result {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+  <div id="calculator">
+    <h2>Frequency to Wavelength Converter</h2>
+    <form id="converterForm">
+      <input type="number" id="frequency" name="frequency" step="any" placeholder="Enter frequency" required>
+      <br>
+      <select id="unit" name="unit">
+        <option value="1">Hz</option>
+        <option value="2">kHz</option>
+        <option value="3">MHz</option>
+        <option value="4">GHz</option>
+      </select>
+      <br>
+      <input type="submit" value="Calculate">
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('converterForm');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const frequency = parseFloat(document.getElementById('frequency').value);
+      const unit = parseInt(document.getElementById('unit').value);
+      let freq_hz;
+
+      switch (unit) {
+        case 1:
+          freq_hz = frequency;
+          break;
+        case 2:
+          freq_hz = frequency * 1e3;
+          break;
+        case 3:
+          freq_hz = frequency * 1e6;
+          break;
+        case 4:
+          freq_hz = frequency * 1e9;
+          break;
+        default:
+          throw new Error('Invalid unit. Please enter Hz, kHz, MHz, or GHz.');
+      }
+
+      const speedOfLight = 299792458; // m/s
+      const wavelength = speedOfLight / freq_hz;
+      document.getElementById('result').innerHTML = `The wavelength corresponding to ${frequency} is ${wavelength.toFixed(4)} meters.`;
+    });
+  </script>
+</body>
+</html>
+
